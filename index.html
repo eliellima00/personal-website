@@ -409,75 +409,213 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-
-            // Mobile Menu
+            // ===== Mobile Menu com animações aprimoradas =====
             const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
             const mobileMenu = document.querySelector('.mobile-menu');
+            const menuLinks = document.querySelectorAll('.mobile-menu a');
 
             if (mobileMenuBtn) {
                 mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenuBtn.classList.toggle('active');
                     mobileMenu.classList.toggle('active');
+                    document.body.classList.toggle('menu-open'); // Impede rolagem quando menu está aberto
                 });
             }
 
-            document.querySelectorAll('.mobile-menu a').forEach(item => {
-                item.addEventListener('click', () => {
+            // Adiciona índices customizados para animação sequencial dos links
+            menuLinks.forEach((link, index) => {
+                link.style.setProperty('--i', index);
+
+                link.addEventListener('click', () => {
+                    mobileMenuBtn.classList.remove('active');
                     mobileMenu.classList.remove('active');
+                    document.body.classList.remove('menu-open');
                 });
             });
 
-            // Animate projects on scroll
-            gsap.registerPlugin(ScrollTrigger);
+            // ===== Animações com GSAP =====
+            if (typeof gsap !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
 
-            gsap.utils.toArray('.project-card').forEach((card, i) => {
-                console.log("Found card:", card);
-                gsap.set(card, { opacity: 0, y: 20 });
+                // Animação dos cards de projeto
+                gsap.utils.toArray('.project-card').forEach((card, i) => {
+                    gsap.set(card, { opacity: 0, y: 20 });
 
-                ScrollTrigger.create({
-                    trigger: card,
-                    start: 'top bottom-=100',
-                    onEnter: () => {
-                        gsap.to(card, {
-                            opacity: 1,
-                            y: 0,
-                            duration: 0.6,
-                            delay: i * 0.1
+                    ScrollTrigger.create({
+                        trigger: card,
+                        start: 'top bottom-=100',
+                        onEnter: () => {
+                            gsap.to(card, {
+                                opacity: 1,
+                                y: 0,
+                                duration: 0.6,
+                                delay: i * 0.1
+                            });
+                        },
+                        // Para garantir que as animações funcionem mesmo quando o usuário retorna à seção
+                        once: false
+                    });
+                });
+
+                // Animação dos itens da timeline
+                gsap.utils.toArray('.timeline-item').forEach((item, i) => {
+                    gsap.set(item, { opacity: 0, x: 30 });
+
+                    ScrollTrigger.create({
+                        trigger: item,
+                        start: 'top bottom-=100',
+                        onEnter: () => {
+                            gsap.to(item, {
+                                opacity: 1,
+                                x: 0,
+                                duration: 0.8,
+                                delay: i * 0.15
+                            });
+                        },
+                        once: false
+                    });
+                });
+
+                // Animação para outros elementos
+                gsap.utils.toArray('.animate-on-scroll').forEach((element) => {
+                    const animation = {};
+
+                    if (element.classList.contains('fadeUp')) {
+                        gsap.set(element, { opacity: 0, y: 30 });
+                        animation.y = 0;
+                    } else if (element.classList.contains('fadeIn')) {
+                        gsap.set(element, { opacity: 0 });
+                    } else if (element.classList.contains('scaleIn')) {
+                        gsap.set(element, { opacity: 0, scale: 0.95 });
+                        animation.scale = 1;
+                    }
+
+                    animation.opacity = 1;
+
+                    ScrollTrigger.create({
+                        trigger: element,
+                        start: 'top bottom-=100',
+                        onEnter: () => {
+                            gsap.to(element, {
+                                ...animation,
+                                duration: 0.8
+                            });
+                        },
+                        once: false
+                    });
+                });
+
+                // Animação de entrada para a seção hero
+                gsap.from('.hero h1', {
+                    opacity: 0,
+                    y: 30,
+                    duration: 1,
+                    delay: 0.2
+                });
+
+                gsap.from('.hero h2', {
+                    opacity: 0,
+                    y: 20,
+                    duration: 1,
+                    delay: 0.4
+                });
+
+                gsap.from('.profile-container', {
+                    opacity: 0,
+                    scale: 0.9,
+                    duration: 1,
+                    delay: 0.1
+                });
+
+                gsap.from('.hero-buttons .btn', {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    delay: 0.6
+                });
+            } else {
+                // Fallback para quando GSAP não está disponível
+                // Aplica as classes de animação diretamente para garantir visibilidade
+                document.querySelectorAll('.project-card, .timeline-item, .animate-on-scroll').forEach(el => {
+                    el.style.opacity = 1;
+                    el.style.transform = 'none';
+                });
+            }
+
+            // ===== Formulário de contato =====
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    // Adiciona animação de sucesso com feedback visual
+                    const submitButton = contactForm.querySelector('button[type="submit"]');
+                    const originalText = submitButton.textContent;
+
+                    submitButton.innerHTML = '<i class="fas fa-check"></i> Mensagem Enviada!';
+                    submitButton.classList.add('success');
+
+                    setTimeout(() => {
+                        contactForm.reset();
+                        submitButton.textContent = originalText;
+                        submitButton.classList.remove('success');
+                    }, 3000);
+                });
+
+                // Adiciona efeito de label flutuante para inputs
+                const formInputs = contactForm.querySelectorAll('input, textarea');
+                formInputs.forEach(input => {
+                    input.addEventListener('focus', () => {
+                        input.parentElement.classList.add('focused');
+                    });
+
+                    input.addEventListener('blur', () => {
+                        if (input.value === '') {
+                            input.parentElement.classList.remove('focused');
+                        }
+                    });
+
+                    // Verifica se o campo já tem valor ao carregar
+                    if (input.value !== '') {
+                        input.parentElement.classList.add('focused');
+                    }
+                });
+            }
+
+            // ===== Smooth Scroll aprimorado =====
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        const headerOffset = 80; // Ajuste conforme necessário
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
                         });
                     }
                 });
             });
 
-            // Formulário de contato
-            const contactForm = document.getElementById('contactForm');
-            if (contactForm) {
-                contactForm.addEventListener('submit', function (e) {
-                    e.preventDefault();
-                    alert('Mensagem enviada!');
-                    contactForm.reset();
-                });
-            }
-
-            // Smooth Scroll
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-
-            // Active sidebar item on scroll
+            // ===== Active sidebar item on scroll com opção threshold =====
             const sections = document.querySelectorAll('section');
             const sidebarItems = document.querySelectorAll('.sidebar-item');
 
             window.addEventListener('scroll', () => {
                 let current = '';
+                const threshold = window.innerHeight / 3;
 
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
                     const sectionHeight = section.clientHeight;
-                    if (scrollY >= (sectionTop - sectionHeight / 3)) {
+                    if (scrollY >= (sectionTop - threshold)) {
                         current = section.getAttribute('id');
                     }
                 });
@@ -489,5 +627,8 @@
                     }
                 });
             });
+
+            // Trigger scroll event para garantir que a sidebar esteja correta no carregamento
+            window.dispatchEvent(new Event('scroll'));
         });
     </script>
