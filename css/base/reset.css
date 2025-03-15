@@ -1,0 +1,27 @@
+/* Reset moderno com box-sizing para todos os elementos */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Configuração de tipo de fonte e tamanho de texto responsivo */
+html {
+  font-size: 100%; /* 16px por padrão */
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--space-2xl);
+}
+
+/* Melhorias para accessibilidade e navegação por teclado */
+:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 3px;
+}
+
+/* Design de seções comum com melhorias em espaçamento e animações */
+section {
+  padding: var(--space-2xl) 0;
+  position: relative;
+}

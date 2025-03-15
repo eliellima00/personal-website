@@ -1,0 +1,175 @@
+/* Contact Section com Grid e formulário melhorado */
+.contact {
+  background-color: var(--background-dark);
+}
+
+.contact-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-2xl);
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.contact-info h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-lg);
+  color: var(--text-color);
+}
+
+.contact-info p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xl);
+  line-height: 1.7;
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  transition: var(--transition-normal);
+}
+
+.contact-link:hover {
+  transform: translateX(5px);
+}
+
+.contact-link i {
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary-transparent);
+  color: var(--primary-color);
+  border-radius: var(--radius-circle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-lg);
+  transition: var(--transition-normal);
+  border: 1px solid var(--primary-border);
+}
+
+.contact-link:hover i {
+  background-color: var(--primary-color);
+  color: black;
+  transform: scale(1.1) rotate(5deg);
+}
+
+.contact-link span {
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: var(--transition-normal);
+}
+
+.contact-link:hover span {
+  color: var(--text-color);
+}
+
+.contact-form {
+  background-color: var(--card-bg);
+  padding: var(--space-2xl);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+  transition: var(--transition-normal);
+}
+
+.contact-form:hover {
+  border-color: var(--primary-border);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px);
+}
+
+.form-group {
+  margin-bottom: var(--space-xl);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--space-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+}
+
+.form-group:focus-within label {
+  color: var(--primary-color);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: var(--space-md);
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: var(--font-size-md);
+  transition: var(--transition-normal);
+  color: var(--text-color);
+  position: relative;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.2);
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+/* Estilo de foco flutuante para inputs */
+.floating-label {
+  position: relative;
+  margin-bottom: var(--space-xl);
+}
+
+.floating-label input,
+.floating-label textarea {
+  width: 100%;
+  padding: var(--space-lg) var(--space-md) var(--space-sm);
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: var(--font-size-md);
+  transition: var(--transition-normal);
+  color: var(--text-color);
+}
+
+.floating-label label {
+  position: absolute;
+  top: 50%;
+  left: var(--space-md);
+  transform: translateY(-50%);
+  transition: var(--transition-normal);
+  pointer-events: none;
+  color: var(--text-secondary);
+}
+
+.floating-label textarea ~ label {
+  top: var(--space-lg);
+}
+
+.floating-label input:focus ~ label,
+.floating-label textarea:focus ~ label,
+.floating-label input:not(:placeholder-shown) ~ label,
+.floating-label textarea:not(:placeholder-shown) ~ label {
+  top: 10px;
+  font-size: var(--font-size-xs);
+  color: var(--primary-color);
+}

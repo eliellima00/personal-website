@@ -1,0 +1,129 @@
+/* Menu Mobile com animações e acessibilidade */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  z-index: 1001;
+  background-color: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-circle);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-md);
+  color: var(--text-secondary);
+  transition: var(--transition-normal);
+}
+
+.mobile-menu-btn:hover {
+  color: var(--primary-color);
+  transform: scale(1.05);
+}
+
+.mobile-menu-btn .bar {
+  position: relative;
+  width: 24px;
+  height: 2px;
+  background-color: currentColor;
+  transition: var(--transition-normal);
+}
+
+.mobile-menu-btn .bar::before,
+.mobile-menu-btn .bar::after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background-color: currentColor;
+  transition: var(--transition-normal);
+}
+
+.mobile-menu-btn .bar::before {
+  top: -8px;
+}
+
+.mobile-menu-btn .bar::after {
+  top: 8px;
+}
+
+.mobile-menu-btn.active .bar {
+  background-color: transparent;
+}
+
+.mobile-menu-btn.active .bar::before {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-menu-btn.active .bar::after {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(-10px);
+}
+
+.mobile-menu.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.mobile-menu a {
+  font-size: var(--font-size-xl);
+  margin: var(--space-md) 0;
+  color: var(--text-color);
+  position: relative;
+  padding: var(--space-xs) 0;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
+  transition-delay: calc(var(--i, 0) * 0.1s);
+}
+
+.mobile-menu.active a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mobile-menu a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+
+.mobile-menu a:hover {
+  color: var(--primary-color);
+}
+
+.mobile-menu a:hover::after {
+  width: 100%;
+}

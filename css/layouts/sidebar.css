@@ -1,0 +1,57 @@
+/* Sidebar com navegação vertical, melhorada com acessibilidade e animações */
+.sidebar {
+  position: fixed;
+  left: var(--space-lg);
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: var(--radius-round);
+  padding: var(--space-lg) 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-normal);
+}
+
+.sidebar:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.sidebar-item {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: var(--font-size-lg);
+  transition: var(--transition-normal);
+  margin: var(--space-xs) 0;
+  border-radius: var(--radius-circle);
+  position: relative;
+}
+
+.sidebar-item:hover,
+.sidebar-item.active {
+  color: var(--primary-color);
+}
+
+.sidebar-item.active {
+  background-color: var(--primary-transparent);
+}
+
+.sidebar-item.active::before {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 30px;
+  background-color: var(--primary-color);
+  border-radius: var(--radius-md);
+  left: -15px;
+  animation: pulse 1.5s infinite;
+}

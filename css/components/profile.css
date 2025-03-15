@@ -1,0 +1,31 @@
+.profile-container {
+  position: relative;
+  margin-bottom: var(--space-lg);
+}
+
+.profile-image {
+  width: 180px;
+  height: 180px;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  border: 5px solid var(--primary-color);
+  padding: 5px;
+  filter: contrast(1.1);
+  transition: var(--transition-normal);
+}
+
+.profile-image:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 25px rgba(29, 185, 84, 0.3);
+}
+
+.profile-outline {
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  right: -15px;
+  bottom: -15px;
+  border: 2px solid var(--primary-color);
+  border-radius: var(--radius-circle);
+  animation: pulse 2s infinite;
+}
