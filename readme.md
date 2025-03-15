@@ -16,7 +16,6 @@ Um portfolio profissional moderno com design elegante e efeitos visuais avançad
   - ScrollTrigger para animações baseadas em scroll
   - Manipulação do DOM para interações dinâmicas
 - **Font Awesome** - Biblioteca de ícones vetoriais
-- **Google Fonts** - Tipografia personalizada
 
 ## ✨ Características
 
